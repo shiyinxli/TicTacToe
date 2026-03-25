@@ -91,12 +91,21 @@ Lost game state after browser refresh.
 
 # User Journey: Mia Schneider
  1. Mia opens the browser on her smartphone during a school break.
+
   2. She receives the game link or room code from her father on WhatsApp.
+
   3. She taps the link and enters the TicTacToe web app.
+
   4. The page loads quickly without installation or account login.
+
   5. Mia taps “Join Game” or enters the room code to connect.
+
   6. She sees a clear status message showing a connection/waiting state.
+
   7. Once both players are connected, the match starts automatically.
+
   8. When it is her turn, Mia taps a grid cell to place her mark.
+
   9. She sees real-time updates when Moritz makes his move.
+  
   10. At the end, the game shows win/loss/draw, and she can start another round if time allows.

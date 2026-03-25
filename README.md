@@ -12,7 +12,7 @@ TicTacToe repository for Software Architecture and Design Patterns exercises.
 ## Collaborations
 
 1. Collaborator: Matrikelnummer: 2297532/ S-number: s250297
-2. Collaborator: 2285577 Matrikelnummer: / S-number: s241121
+2. Collaborator: Matrikelnummer: 2285577 / S-number: s241121
 
 ## Structure of this repository
 
