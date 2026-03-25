@@ -9,6 +9,9 @@ TicTacToe repository for Software Architecture and Design Patterns exercises.
 - Student-ID (Matrikelnummer): 2280709
 - S-Number: s240791
 
+## Collaborations
+
+1. Collaborator: Matrikelnummer: 2297532/ S-number: s250297
 
 ## Structure of this repository
 
