@@ -20,8 +20,10 @@
 **Background & Characteristics**  
  Moritz works full-time as an IT manager and has a demanding schedule, often working until late in the evening. Because of his busy job, he has limited time to spend with his daughter during weekdays. He is technically skilled and comfortable using desktop computers and web applications.
 
+
 **Goals & Motivation**  
  Moritz wants to use his lunch break efficiently to connect with his daughter. He is looking for a simple and quick way to play a game together remotely, without installing any software.
+
 
 **Needs**
 
@@ -46,19 +48,26 @@
 * Browser Skill: Basic
 * Typical Network: Mobile internet or school Wi-Fi
 * Communication While Playing: Voice call on WhatsApp
+
+
 **Background & Characteristics**  
 Mia is a primary school student who likes simple mobile games. She can tap buttons, open links, and use basic apps, but she has a low tolerance for complex menus and long loading times.  
+
+
 **Goals & Motivation**
-Mia wants to play TicTacToe with her parents during a school break. She joins from her smartphone, needs to understand the game state immediately, and expects a full game to finish within a few minutes.
+Mia wants to play TicTacToe with her parents during a school break. She joins from her smartphone, needs to understand the game state immediately, and expects a full game to finish within a few minutes.  
 * Play TicTacToe quickly during short breaks.
 * See whose turn it is at all times.
 * Complete one game in a few minutes.  
+
+
 **Needs**
 Browser-based gameplay optimized for small screens.
 Large touch targets and clear game symbols.
 No registration or account setup.
 Fast loading and stable connection behavior.
 Immediate feedback after sending a move.  
+
 **Frustrations**
 Small buttons that are difficult to tap.
 Confusing layout or unclear game state.
