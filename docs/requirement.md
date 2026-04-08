@@ -13,7 +13,7 @@
 * Role: Father player / first player
 * Device: computer / smartphone
 * Browser Skill: proficient
-* Typical Network: Mobile internal / Company Ehternet / Company Wlan
+* Typical Network: Mobile internal / Company Ethernet / Company WLan
 * Communication while Playing: Voice call / Whatsapp
 
 
@@ -107,5 +107,5 @@ Lost game state after browser refresh.
   8. When it is her turn, Mia taps a grid cell to place her mark.
 
   9. She sees real-time updates when Moritz makes his move.
-  
+
   10. At the end, the game shows win/loss/draw, and she can start another round if time allows.
