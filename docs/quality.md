@@ -1,17 +1,20 @@
 # Part 1 – Quality Attributes 
 
-1. **List and rank the 5 most important ISO 25010 quality attributes for your TicTacToe project.**   
+1. **List and rank the 5 most important ISO 25010 quality attributes for your TicTacToe project.**  
+
 1. Portability  
 2. Usability  
 3. Functional suitability  
 4. Reliability  
 5. Performance efficiency  
+
 2. **For each quality attribute: Provide a short description, why this attribute is important for your TicTacToe project.**   
 1. Portability: Portability is important because the game must run on different devices and platforms, including desktop browsers and mobile browsers. Ensuring portability allows both players to access the game without installation and configuration, regardless of their device or operating system.  
 2. Usability:  Usability is crucial because both users have different technical skills and devices. The game must be simple, intuitive, and easy to use so that players can play without confusion and can quickly start a game during their short lunch break.  
 3. Functional suitability: Functional suitability ensures that the game behaves correctly (e.g., valid moves, correct handling, and accurate game results). If the game does not fulfill players’ expectations, users might experience frustration and loss of trust in the game.  
 4. Reliability: Making sure the game runs consistently without interruptions, allowing both players to interact smoothly in real time despite being in different locations.  
 5. Performance efficiency: Performance efficiency is important because the game requires an immediate response to user actions. In a browser-based TicTacToe, moves must be displayed instantly to ensure smooth gameplay and a good user experience.   
+
 3. **For each quality attribute: Name or create a use case for which this quality attribute is the most important. Describe how this specific quality attribute affects this specific use-case.** 
 
 | UC-001 | Start and share the game |  |
