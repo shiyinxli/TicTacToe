@@ -2,6 +2,7 @@ package com.swa.backend.controller;
 
 import com.swa.backend.model.Game;
 import com.swa.backend.service.GameService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,7 +21,11 @@ public class GameRestController {
     }
 
     @PostMapping("/join/{roomId}")
-    public Game joinGame (@PathVariable String roomId){
-        return gameService.joinGame(roomId);
+    public ResponseEntity<Game> joinGame(@PathVariable String roomId){
+        Game game = gameService.joinGame(roomId);
+        if(game == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(game);
     }
 }

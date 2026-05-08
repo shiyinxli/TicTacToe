@@ -1,10 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
 
 function App() {
 
+  const [stompClient, setStompClient] = useState(null);
+
   const [roomId, setRoomId] = useState("");
+
   const [joinRoomId, setJoinRoomId] = useState("");
-  const [message, setMessage] = useState("");
+
+  const [player, setPlayer] = useState("");
+
+  const [game, setGame] = useState(null);
+
+  useEffect(() => {
+
+    const socket = new SockJS("http://localhost:8080/ws");
+
+    const client = Stomp.over(socket);
+
+    client.connect({}, () => {
+      console.log("Connected");
+    });
+
+    setStompClient(client);
+
+  }, []);
+
+  const subscribeToRoom = (roomId, client) => {
+
+    client.subscribe(`/topic/game/${roomId}`, (message) => {
+
+      const updatedGame = JSON.parse(message.body);
+
+      setGame(updatedGame);
+    });
+  };
 
   const createRoom = async () => {
 
@@ -18,32 +50,52 @@ function App() {
     const data = await response.json();
 
     setRoomId(data.roomId);
-    setMessage("Room created!");
+
+    setPlayer("X");
+
+    setGame(data);
+
+    subscribeToRoom(data.roomId, stompClient);
   };
 
   const joinRoom = async () => {
 
     const response = await fetch(
-      `http://localhost:8080/api/game/join/${joinRoomId}`,
+      `http://localhost:8080/api/game/join/${joinRoomId.toUpperCase()}`,
       {
         method: "POST",
       }
     );
 
-    if (!response.ok) {
-      setMessage("Failed to join room");
+    if (!response.ok){
+      alert("Room not found or already full");
       return;
     }
 
     const data = await response.json();
 
-    if (!data) {
-      setMessage("Room not found or full");
+    setRoomId(data.roomId);
+    setPlayer("O");
+    setGame(data);
+    subscribeToRoom(data.roomId, stompClient);
+  };
+
+  const makeMove = (row, col) => {
+
+    if (!game) {
       return;
     }
 
-    setRoomId(data.roomId);
-    setMessage("Joined room!");
+    stompClient.send(
+      "/app/move",
+      {},
+      JSON.stringify({
+        roomId,
+        row,
+        col,
+        player,
+      })
+    );
   };
 
   return (
@@ -51,33 +103,59 @@ function App() {
 
       <h1>Tic Tac Toe</h1>
 
-      <button onClick={createRoom} style={styles.button}>
-        Create Room
-      </button>
+      {!game && (
+        <>
+          <button onClick={createRoom} style={styles.button}>
+            Create Room
+          </button>
 
-      <div style={{ marginTop: "20px" }}>
+          <div style={{ marginTop: "20px" }}>
 
-        <input
-          type="text"
-          placeholder="Enter Room ID"
-          value={joinRoomId}
-          onChange={(e) => setJoinRoomId(e.target.value)}
-          style={styles.input}
-        />
+            <input
+              placeholder="Room ID"
+              value={joinRoomId}
+              onChange={(e) => setJoinRoomId(e.target.value)}
+              style={styles.input}
+            />
 
-        <button onClick={joinRoom} style={styles.button}>
-          Join Room
-        </button>
+            <button onClick={joinRoom} style={styles.button}>
+              Join Room
+            </button>
 
-      </div>
-
-      {roomId && (
-        <h2>
-          Room ID: {roomId}
-        </h2>
+          </div>
+        </>
       )}
 
-      <p>{message}</p>
+      {game && (
+        <>
+          <h2>Room: {roomId}</h2>
+
+          <h3>You are Player {player}</h3>
+
+          <h3>Current Turn: {game.currentPlayer}</h3>
+
+          {game.winner === "DRAW" ?(
+            <h2>It's a Draw!</h2>
+          ):(game.winner && <h2>Winner: {game.winner}</h2>)}
+
+          <div style={styles.board}>
+
+            {game.board.map((row, rowIndex) =>
+              row.map((cell, colIndex) => (
+
+                <button
+                  key={`${rowIndex}-${colIndex}`}
+                  style={styles.cell}
+                  onClick={() => makeMove(rowIndex, colIndex)}
+                >
+                  {cell}
+                </button>
+              ))
+            )}
+
+          </div>
+        </>
+      )}
 
     </div>
   );
@@ -89,20 +167,34 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginTop: "100px",
+    marginTop: "50px",
     fontFamily: "Arial",
   },
 
   button: {
     padding: "10px 20px",
     fontSize: "16px",
-    marginLeft: "10px",
+    margin: "5px",
     cursor: "pointer",
   },
 
   input: {
     padding: "10px",
     fontSize: "16px",
+  },
+
+  board: {
+    display: "grid",
+    gridTemplateColumns: "repeat(3, 100px)",
+    gap: "5px",
+    marginTop: "20px",
+  },
+
+  cell: {
+    width: "100px",
+    height: "100px",
+    fontSize: "36px",
+    cursor: "pointer",
   },
 };
 
