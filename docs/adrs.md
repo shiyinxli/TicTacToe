@@ -2,112 +2,137 @@
 
 # Part 1 \- Primary ADRs
 
-## Programming Language: JavaScript vs. Python
+## Backend Programming Language: Java vs. JavaScript
 
-This decision defines the primary technology stack. We are selecting the core language for the TicTacToe game.
+In this architectural decision, we decide the core backend programming language of the TicTacToe application.
 
-## 1\. Context
+### **1\. Context**
 
-We are developing a browser-based TicTacToe game that allows two players to play in real time across different devices: desktop and mobile. The system must run without installation and be easily accessible via a web browser. 
+We are building a multiplayer TicTacToe web application.
 
-The choice of programming language will define how the game is implemented, deployed, and executed in the browser. 
+Two players should be able to play against each other from different devices through the internet.
 
-## 1.1. Constraints
+One player can start a game simply by opening the website, without authentication, and share the generated room number with another player.
 
-### 1.1.1. Organizational
+The application supports real-time communication between players and should work reliably with multiple concurrent game rooms.
 
-* The project is developed within a limited timeframe.  
-* Team members have basic knowledge of both JavaScript and Python.  
-* The solution should be simple to implement and maintain.  
-* No complex infrastructure or deployment pipeline is expected. 
+The backend is responsible for:
 
-### 1.1.2. Technological
+* Room creation and management  
+* Game state synchronization  
+* WebSocket communication  
+* Move validation  
+* Reliability and performance  
+* REST API endpoints
 
-* The game must run in a web browser.  
-* No installation should be required for users.   
-* The application should support real-time interaction between players. 
+The frontend is implemented as a web application communicating with the backend through REST and WebSocket APIs.
 
-## 1.2. Quality Objectives
+#### 1.1 Constraints
 
-* Usability: The game should be easy to access and play instantly.  
-* Portability: Must run across different devices and browsers.  
-* Performance efficiency: Fast response to user input.   
-* Reliability: Stable gameplay without crashes or desynchronization.  
-* Functional suitability: Correct game logic and behavior. 
+##### 1.1.1 Organizational
 
-## 2\. Solution Alternatives
+The development team already has experience with Java from university projects and backend development courses.
 
-**Alternative 1: JavaScript**
+The project should follow clean software architecture and support automated testing.
 
-* Runs natively in web browsers.  
-* Can be used for both fronted and backed (Node.js)  
-* Supports real-time communication (e.g., WebSockets)
+The backend should be maintainable and easy to extend in the future.
 
-**Alternative 2: Python**
+##### 1.1.2 Technological
 
-* Requires a backend framework (e.g., Flask, Django).  
-* Cannot run directly in the browser (without additional tools).  
-* Needs integration with frontend technologies (HTML/CSS/JS).
+The application will run as a web service and support real-time multiplayer communication.
 
-## 3\. Evaluation of Alternatives
+The backend framework should provide:
 
-|  | JavaScript | Python |
-| :---- | :---- | :---- |
-| Portability | \++ | \- |
-| Usability | \++ | \- |
-| Compatibility | \+ | \-- |
-| Reliability | \++ | \+ |
-| Performance Efficiency | \+ | 0 |
-| Real-time support | \++ | \- |
-| Learning curve | \++ | \++ |
+* REST API support  
+* WebSocket support  
+* Good testing capabilities  
+* Scalability for concurrent users  
+* Stable deployment support
 
-## 4\. Decision
+The frontend communicates with the backend using HTTP and WebSocket protocols.
 
-We chose JavaScript as the primary programming language for the TicTacToe Project. 
+#### 1.2 Quality Objectives
 
-## 5\. Consequences
+1. Portability  
+2. Usability  
+3. Compatibility  
+4. Reliability  
+5. Performance efficiency
 
-**Advantages:**
+### **2\. Solution Alternatives**
 
-* The game can run directly in the browser without installation.   
-* Faster development and simpler deployment.   
-* Better support for real-time interaction.  
-* High portability across devices and platforms.
+1. Alternative 1: Java Backend
 
-**Disadvantages:**
+    The backend is implemented using Java with Spring Boot.
 
-* Requires careful handling of game state synchronization.   
-* Potential security concerns if the backend is added later.   
-* JavaScript code can become harder to maintain if not structured well. 
+    REST APIs are implemented using Spring MVC and real-time communication is implemented using WebSocket support from Spring.
 
-**Risks:**
+2. Alternative 2: JavaScript Backend
 
-* JavaScript runs on the client side, which allows users to manipulate the game and potentially cheat.   
-* Asynchronous communication in JavaScript can lead to inconsistent game states between players.   
-* JavaScript’s dynamic typing may cause runtime errors that are harder to detect during development.   
-* Differences between browsers can result in inconsistent behavior or display issues.   
-* Performance depends on the user’s device, which may lead to slower gameplay on low-end hardware.   
-* JavaScript code can become difficult to maintain if not properly structured.
+    The backend is implemented using JavaScript with Node.js and Express.
+
+    REST APIs are implemented with Express and WebSocket communication is implemented using Socket.IO or ws.
+
+### **3\. Evaluation of Alternatives**
+
+|  | Java | JavaScript |
+| ----- | ----- | ----- |
+| Portability | \+ | \+ |
+| Usability | \+ | 0 |
+| Compatibility | \+ | \+ |
+| Reliability | \+ | 0 |
+| Performance efficiency | \+ | 0 |
+| Concurrency handling | \+ | 0 |
+| Maintainability | \+ | 0 |
+| Development speed | 0 | \+ |
+
+### **4\. Decision**
+
+Java is selected as the backend programming language because it provides higher reliability, maintainability, and performance efficiency for a real-time multiplayer web application.
+
+Spring Boot also offers strong support for REST APIs, WebSocket communication, automated testing, and scalable backend architecture.
+
+### **5\. Consequences**
+
+**Advantages**
+
+* Strong type safety and compile-time checking  
+* Better reliability for multiplayer synchronization  
+* Mature backend ecosystem with Spring Boot  
+* Good support for WebSocket communication  
+* Easier maintenance and testing  
+* Better scalability for concurrent users
+
+**Disadvantages**
+
+* More verbose syntax compared to JavaScript  
+* Slower initial development speed  
+* Higher learning curve for backend configuration
+
+**Risks**
+
+* More complex backend setup  
+* Higher memory consumption compared to lightweight Node.js servers
 
 ## Website type: SPA vs. Template
 
 In this architectural decision, we decide the type of website for the TicTacToe game.
 
-## 1\. Context
+### **1\. Context**
 
 We are building a browser-based TicTacToe game that allows two players to play by simply sharing a link. The game must run instantly in a browser on both desktop and mobile devices without requiring login or installation.
 
 The system must support real-time interaction between two players using the same shared session.
 
-## 1.1. Constraints
+#### 1.1. Constraints
 
-### 1.1.1. Organizational
+##### 1.1.1. Organizational
 
 * Small development scope (single developer or small team)  
 * Rapid development and deployment expected  
 * No need for complex infrastructure
 
-### 1.1.2. Technological
+##### 1.1.2. Technological
 
 * Must run in modern browsers (mobile \+ desktop)  
 * No login/authentication system  
@@ -115,7 +140,7 @@ The system must support real-time interaction between two players using the same
 * Requires real-time communication between two devices.  
 * Lightweight backend or backend-as-a-service is acceptable.
 
-## 1.2. Quality Objectives
+#### 1.2. Quality Objectives
 
 The decision will focus on the following quality attributes:
 
@@ -125,7 +150,7 @@ The decision will focus on the following quality attributes:
 4. Reliability: Stable gameplay without crashes or inconsistent states.  
 5. Performance Efficiency: Fast load time and responsive interactions.
 
-## 2\. Solution Alternatives
+### **2\. Solution Alternatives**
 
 **Alternative 1: Single Page Application (SPA)**
 
@@ -139,7 +164,7 @@ The server generates HTML pages dynamically for each interaction.
 * Updates are reflected via page reload or polling  
 * Real-time interaction is difficult to achieve
 
-## 3\. Evaluation of Alternatives
+### **3\. Evaluation of Alternatives**
 
 |  | SPA | Template |
 | :---- | :---- | :---- |
@@ -152,11 +177,11 @@ The server generates HTML pages dynamically for each interaction.
 | Two-device Experience | \+ | \- |
 | Implementation Effort | 0 | \+ |
 
-## 4\. Decision
+### **4\. Decision**
 
 We choose: Single Page Application (SPA) with real-time backend support.
 
-## 5\. Consequences
+### **5\. Consequences**
 
 **Advantage**: 
 
@@ -176,182 +201,241 @@ We choose: Single Page Application (SPA) with real-time backend support.
 * Network instability may affect gameplay  
 * Dependency on JavaScript and browser capabilities
 
-## Web Library / Framework: React vs. No Framework (Vanilla JavaScript)
+## Frontend Build Framework: React (Create React App) vs. Vite
 
-## 1\. Context
+In this architectural decision, we decide the frontend development framework and build tool of the TicTacToe application.
 
-The project is the development of a web-based TicTacToe game. The application is relatively small and includes a limited number of features, such as rendering the game board, handling user interaction, updating game state, checking win conditions, and restarting the game.
+### **1\. Context**
 
-The main architectural question is whether the frontend should be implemented using React or without any framework, using only HTML, CSS, and JavaScript.
+We are building a multiplayer TicTacToe web application that allows two players on different devices to play together through the internet.
 
-Because TicTacToe is a simple game with a small state space and limited UI complexity, both alternatives are technically feasible. The decision, therefore, depends mainly on development effort, maintainability, learning benefits, and suitability for the project scope.
+The frontend must provide:
 
-## 1.1. Constraints
+* Real-time game updates  
+* Responsive user interface  
+* Room creation and joining  
+* Communication with the backend through REST APIs and WebSocket  
+* Fast loading and smooth user experience
 
-### 1.1.1. Organizational
+The frontend should be easy to develop, maintain, and deploy.
 
-* The team size is small.  
-* Development resources are limited.  
-* The project should be easy to explain and demonstrate.  
-* The implementation should remain manageable for all team members.
+The application is intended to run in modern web browsers on desktop and mobile devices.
 
-### 1.1.2. Technological
+#### 1.1 Constraints
 
-* The application is browser-based.  
-* The game logic is simple and can be handled entirely on the frontend.  
-* No backend, database, or distributed infrastructure is required.  
-* The UI consists of only a few interactive components.
+##### 1.1.1 Organizational
 
-## 1.2. Quality Objectives
+The development team already has basic knowledge of JavaScript and React.
 
-1. Portability: Works across devices and browsers without installation.  
-2. Usability: Provides an intuitive and user-friendly interface.  
-3. Functional Suitability: Ensures correct implementation of all required game features.  
-4. Reliability: Maintains stable and consistent gameplay without failures.  
-5. Performance Efficiency: Ensures fast loading and responsive user interactions.
+The frontend should support rapid development and easy debugging.
 
-## 2\. Solution Alternatives
+The project timeline is limited, therefore developer productivity is important.
 
-**Alternative 1: React**  
-React is a JavaScript library for building component-based user interfaces. It supports state-driven rendering and modular UI development.  
-Possible use in this project:
+##### 1.1.2 Technological
 
-* A Board component for the game grid  
-* A Square component for each field  
-* A state variable for turns and board state  
-* Conditional rendering for winner and restart messages
+The frontend communicates with a Java backend through HTTP and WebSocket.
 
-**Alternative 2: No Framework (Vanilla JavaScript)**  
-This approach uses only standard web technologies:
+The frontend technology should support:
 
-* HTML for structure  
-* CSS for styling  
-* JavaScript for logic and DOM manipulation (DOM-Manipulation)  
-* Possible use in this project:  
-* Render the game board directly in HTML  
-* Handle clicks using event listeners  
-* Update the UI manually through DOM operations  
-* Store board state in a simple array
+* Component-based UI development  
+* Fast hot reloading during development  
+* Efficient production builds  
+* Easy dependency management  
+* Cross-platform browser support
 
-## 3\. Evaluation of Alternatives
+#### 1.2 Quality Objectives
 
-|  | React | No Framework |
-| :---- | :---- | :---- |
+1. Portability  
+2. Usability  
+3. Compatibility  
+4. Reliability  
+5. Performance efficiency
+
+### **2\. Solution Alternatives**
+
+1. Alternative 1: React with Create React App (CRA)
+
+    The frontend is developed using React initialized with Create React App.
+
+    CRA provides a traditional React project setup with webpack-based configuration.
+
+2. Alternative 2: React with Vite
+
+    The frontend is developed using React initialized with Vite.
+
+    Vite provides a modern frontend tooling system with faster development server startup and optimized builds.
+
+### **3\. Evaluation of Alternatives**
+
+|  | CRA | Vite |
+| ----- | ----- | ----- |
 | Portability | \+ | \+ |
-| Usability | \+ | \- |
-| Functional Suitability | \+ | \- |
-| Reliability | \+ | 0 |
-| Performance Efficiency | \+ | \- |
-| Real-time Synchronization | \+ | \- |
-| Two-device Experience | \+ | \- |
-| Implementation Effort | 0 | \+ |
+| Usability | 0 | \+ |
+| Compatibility | \+ | \+ |
+| Reliability | \+ | \+ |
+| Performance efficiency | \- | \+ |
+| Development speed | \- | \+ |
+| Hot reload performance | \- | \+ |
+| Build speed | \- | \+ |
+| Community adoption | \+ | \+ |
 
-## 4\. Decision
+### **4\. Decision**
 
-The project will be implemented without a framework, using HTML, CSS, and Vanilla JavaScript.
+Vite is selected as the frontend build framework because it provides better development performance, faster hot reload, and improved build efficiency for the TicTacToe web application.
 
-## 5\. Consequences
+Vite also simplifies frontend setup and improves the overall developer experience while maintaining compatibility with React.
 
-**Advantages:**
+### **5\. Consequences**
 
-* The implementation remains simple and lightweight.  
-* Development can proceed quickly with minimal setup effort.  
-* The solution matches the small scope of the application.  
-* The team can focus on core game logic instead of framework-specific structure.  
-* The final code is easy to demonstrate in an academic context.
+**Advantages**
 
-**Disadvantages:**
+* Very fast development server startup  
+* Faster hot module replacement  
+* Better frontend build performance  
+* Improved developer productivity  
+* Modern and lightweight tooling  
+* Easy integration with React and WebSocket communication
 
-* UI updates require more manual DOM handling.  
-* The architecture is less modular than a React-based solution.  
-* Future extensions may require refactoring if the project becomes larger.  
-* The team gains less experience with modern frontend libraries.
+**Disadvantages**
+
+* Smaller ecosystem compared to older CRA tooling  
+* Some older tutorials and plugins are mainly designed for CRA
 
 **Risks**
 
-* If additional features are added later, the code may become less maintainable.  
-* Manual DOM manipulation may lead to repetitive logic.
+* Developers unfamiliar with Vite may require initial learning  
+* Some legacy webpack-based configurations may require adaptation
 
 # Part 2 \- Additional ADRs
 
-## State Management Approach: Frontend State Only vs. Backend \+ Database
+## Testing Strategy and Amount of Testing
 
-## 1\. Context
+In this architectural decision, we determine the appropriate  
+ amount and focus of testing for the Browser-Based TicTacToe system.
 
-The TicTacToe game requires managing the game state, including the board, player turns, and game results.  
-The main decision is whether the state should be managed entirely on the frontend (client-side) or stored and managed using a backend with a database.
+### **1\. Context**
 
-## 1.1. Constraints
+The project is a browser-based multiplayer TicTacToe game  
+ implemented using React, Spring Boot, REST APIs, and WebSockets.
 
-### 1.1.1. Organizational
+The system supports:
 
-* Small team  
-* Focus on a working prototype  
-* Easy demonstration required
+* creation of multiplayer rooms  
+* real-time synchronization between players  
+* move validation  
+* winner and draw detection
 
-### 1.1.2. Technological
+The application is intentionally lightweight and does not  
+ contain persistent storage, authentication, or complex UI workflows.
 
-* Browser-based application  
-* No strict requirement for persistent storage  
-* No multiplayer or distributed system needed  
-* Simple game logic
+#### **1.1 Constraints**
 
-## 1.2. Quality Objectives
+##### **1.1.1 Organizational**
 
-1. Portability: Works on browsers without installation.  
-2. Usability: Provides an intuitive and user-friendly interface.  
-3. Functional Suitability: Ensures correct implementation of all required game features.  
-4. Reliability: Maintains stable and consistent gameplay without failures.  
-5. Performance Efficiency: Ensures fast loading and responsive user interactions.
+The project is developed within limited time constraints  
+ as part of a university software architecture exercise.
 
-## 2\. Solution Alternatives
+The testing effort must therefore focus on the most critical  
+ architectural risks instead of maximizing total test quantity.
 
-**Alternative 1: Frontend State Only (Client-side)**
+##### **1.1.2 Technological**
 
-* Game state stored in browser memory (e.g., JavaScript variables or state)  
-* No backend or database
+The frontend is implemented as a React Single Page Application.
 
-**Alternative 2: Backend \+ Database**
+The backend uses Java Spring Boot with WebSocket communication.
 
-* Game state stored on a server  
-* Persistent storage using a database  
-* Communication via API
+The application stores active games in-memory using ConcurrentHashMap.
 
-## 3\. Evaluation of Alternatives
+#### **1.2 Quality Objectives**
 
-|  | Frontend State Only  | Backend \+ Database |
-| :---- | :---- | :---- |
-| Portability | \+ | \+ |
-| Usability | \+ | 0 |
-| Functional Suitability | \+ | \+ |
-| Reliability | 0 | \+ |
-| Performance Efficiency | \+ | \- |
-| Real-time Synchronization | \- | \+ |
-| Two-device Experience | \- | \+ |
-| Persistence | \- | \+ |
-| Implementation Effort | \+ | \- |
+1. Reliability  
+2. Compatibility  
+3. Performance Efficiency  
+4. Portability  
+5. Usability
 
-## 4\. Decision
+### **2\. Solution Alternatives**
 
-Due to the requirement that the application must be usable across two devices, the game state will be managed using a backend with a database.
+#### **2.1 Alternative 1: Extensive Full-Stack Testing**
 
-## 5\. Consequences
+Apply extensive testing across:
 
-**Advantages:**
+* backend services  
+* REST APIs  
+* WebSocket communication  
+* frontend UI  
+* end-to-end browser automation
 
-* Enables multi-device interaction   
-* Supports real-time synchronization between clients  
-* Allows persistent storage of game state  
-* Provides a foundation for future extensions (e.g., multiplayer, analytics)
+This approach maximizes coverage but significantly increases  
+ implementation complexity and development effort.
 
-**Disadvantages:**
+#### **2.2 Alternative 2: Backend-Focused Testing**
 
-* Increased implementation complexity  
-* Requires backend setup and maintenance  
-* Higher latency compared to a pure frontend solution
+Prioritize testing of:
 
-**Risks:** 
+* backend business logic  
+* move validation  
+* winner detection  
+* draw handling  
+* room management  
+* REST endpoint integration
 
-* More development effort for a small team  
-* Need to handle synchronization and consistency issues
+Frontend testing remains limited to manual UI verification  
+ because the frontend mainly renders backend state and contains  
+ limited business logic.
+
+### **3\. Evaluation of Alternatives**
+
+|  | Full-Stack Testing | Backend-Focused Testing |
+| ----- | ----- | ----- |
+| Reliability | \+ | \+ |
+| Compatibility | \+ | \+ |
+| Performance Efficiency | \- | \+ |
+| Development Complexity | \- | \+ |
+| Maintainability | \- | \+ |
+| Testing Effort | \- | \+ |
+| UI Validation | \+ | 0 |
+
+### **4\. Decision**
+
+Alternative 2 was selected.
+
+The project prioritizes backend-focused testing because the  
+ backend contains the system’s critical architectural logic,  
+ including:
+
+* multiplayer synchronization  
+* move validation  
+* turn enforcement  
+* winner detection  
+* draw handling
+
+These components directly affect the reliability and  
+ consistency of the system.
+
+Integration tests are additionally used for REST endpoints  
+ to ensure compatibility between frontend and backend  
+ communication.
+
+Frontend UI testing remains primarily manual because the UI  
+ contains limited business logic and low architectural risk.
+
+### **5\. Consequences**
+
+Advantages:
+
+* Strong reliability testing for critical game logic  
+* Reduced implementation complexity  
+* Faster development iteration  
+* Good balance between quality and development effort
+
+Disadvantages:
+
+* Limited automated frontend UI validation  
+* Some visual UI issues may require manual detection
+
+Risks:
+
+* UI regressions may not be automatically detected  
+* WebSocket behavior is only partially covered by automated tests
 

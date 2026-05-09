@@ -1,6 +1,6 @@
 # Persona 1: Moritz Schneider
 
-![father photo](boss.jpg)
+![father photo](images/boss.jpg)
 
 ## Basic Information
 
@@ -39,7 +39,7 @@
 * Interfaces that are not intuitive
 
 # Persona 2: Mia Schneider
-![daughter photo](daughter.jpg)
+![daughter photo](images/daughter.jpg)
 ## Basic Information
 * Name: Mia Schneider
 * Age: 6
