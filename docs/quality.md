@@ -4,7 +4,7 @@
 
 1. Portability  
 2. Usability  
-3. Functional suitability  
+3. Compatibility
 4. Reliability  
 5. Performance efficiency  
 
